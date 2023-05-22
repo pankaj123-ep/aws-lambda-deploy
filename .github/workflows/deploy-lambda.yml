@@ -6,7 +6,7 @@ jobs:
         steps:
             - name: checkout code
               uses: actions/checkout@v3
-            - name: connect aws
+            - name: connect aws 
               uses: aws-actions/configure-aws-credentials@v2
               with :
                 aws-region: us-east-1
