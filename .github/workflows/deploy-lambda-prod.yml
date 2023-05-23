@@ -21,7 +21,8 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                 name: lambda-code
-                path: dist-path
+                path: sample-lambda.py
+                
     UAT-DEPLOYMENT:
           runs-on: [ubuntu-latest]
           environment: 
