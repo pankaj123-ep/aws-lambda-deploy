@@ -1,7 +1,7 @@
-name: lambda-deployment
+name: lambda-deployment-2
 on: 
    push:
-     branches: uat 
+     branches: uat
 
 jobs:
     create-role:
