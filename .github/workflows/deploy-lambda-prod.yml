@@ -41,11 +41,13 @@ jobs:
                       uses: actions/download-artifact@v3
                       with:
                         name: lambda-code
-                    - name: aws cli execution
+                    - name: aws cli execution for lambda
                       run: |
                         echo "${{vars.environment}}"
                         zip sample-lambda.zip sample-lambda.py
-                        aws lambda create-function --function-name sample-lambda-${{vars.ENVIRONMENT}} --runtime python3.8 --zip-file fileb://sample-lambda.zip --handler sample-lambda.index_handler --role arn:aws:iam::064648406443:role/temp-role-lambda
+                        response=$(aws lambda create-function --function-name sample-lambda-${{vars.ENVIRONMENT}} --runtime python3.8 --zip-file fileb://sample-lambda.zip --handler sample-lambda.index_handler --role arn:aws:iam::064648406443:role/temp-role-lambda)
+                        echo $response
+
 
                       
     deploy-staging:
