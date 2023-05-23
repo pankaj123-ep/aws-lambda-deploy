@@ -56,8 +56,10 @@ jobs:
         environment: 
           name: Staging
         steps:
-            - name: checkout code 5
-              uses: actions/checkout@v3
+            - name : download artifacts
+              uses: actions/download-artifact@v3
+              with:
+                name: lambda-code
             - name: connect aws 
               uses: aws-actions/configure-aws-credentials@v2
               with :
@@ -66,7 +68,9 @@ jobs:
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             - name: aws cli execution
               run: |
-               aws s3 ls
+                echo "${{vars.environment}}"
+                zip sample-lambda.zip sample-lambda.py
+                aws lambda create-function --function-name sample-lambda-${{vars.ENVIRONMENT}} --runtime python3.8 --zip-file fileb://sample-lambda.zip --handler sample-lambda.index_handler --role arn:aws:iam::064648406443:role/temp-role-lambda
     deploy-prod:
         runs-on: [ubuntu-latest]
         needs: deploy-staging
