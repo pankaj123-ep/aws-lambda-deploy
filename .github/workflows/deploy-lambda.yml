@@ -10,7 +10,9 @@ jobs:
         environment: 
           name: uat
         steps:
-            - name: checkout code 3
+
+            - name: checkout code 5
+
               uses: actions/checkout@v3
             - name: connect aws 
               uses: aws-actions/configure-aws-credentials@v2
