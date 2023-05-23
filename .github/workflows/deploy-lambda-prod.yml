@@ -56,8 +56,8 @@ jobs:
                aws s3 ls
     deploy-prod:
         runs-on: [ubuntu-latest]
-        needs: deploy-prod
-        name: Staging Deployment
+        needs: deploy-staging
+        name: Prod Deployment
         environment: 
           name: Prod
         steps:
