@@ -45,7 +45,7 @@ jobs:
                       run: |
                         echo "${{vars.environment}}"
                         zip sample-lambda.zip sample-lambda.py
-                        aws lambda update-function-code --function-name sample-lambda-${{vars.ENVIRONMENT}} --zip-file fileb://sample-lambda.zip --handler sample-lambda.index_handler --role arn:aws:iam::064648406443:role/temp-role-lambda
+                        aws lambda update-function-code --function-name sample-lambda-${{vars.ENVIRONMENT}} --zip-file fileb://sample-lambda.zip 
                         
 
 
@@ -72,7 +72,7 @@ jobs:
               run: |
                 echo "${{vars.environment}}"
                 zip sample-lambda.zip sample-lambda.py
-                aws lambda update-function-code --function-name sample-lambda-${{vars.ENVIRONMENT}} --zip-file fileb://sample-lambda.zip --handler sample-lambda.index_handler --role arn:aws:iam::064648406443:role/temp-role-lambda
+                aws lambda update-function-code --function-name sample-lambda-${{vars.ENVIRONMENT}} --zip-file fileb://sample-lambda.zip
     deploy-prod:
         runs-on: [ubuntu-latest]
         needs: deploy-staging
