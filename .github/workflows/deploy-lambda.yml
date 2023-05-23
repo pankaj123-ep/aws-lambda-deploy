@@ -14,5 +14,10 @@ jobs:
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             - name: aws cli execution
               run: aws s3 ls
+            - name: upload artifacts
+              uses: actions/upload-artifacts@v3
+              with:
+                name: lambda-source
+                path: lambda
 
 
