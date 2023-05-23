@@ -45,8 +45,10 @@ jobs:
                       run: |
                         echo "${{vars.environment}}"
                         zip sample-lambda.zip sample-lambda.py
+                    - shell: bash
+                      run: |
                         response=$(aws lambda create-function --function-name sample-lambda-${{vars.ENVIRONMENT}} --runtime python3.8 --zip-file fileb://sample-lambda.zip --handler sample-lambda.index_handler --role arn:aws:iam::064648406443:role/temp-role-lambda)
-                        echo $response
+                        echo "$response"
 
 
                       
