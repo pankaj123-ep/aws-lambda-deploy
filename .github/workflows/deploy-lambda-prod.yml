@@ -4,11 +4,10 @@ on:
         branches: [main]
     push: 
       branches: [main]
+    workflow_dispatch:
 jobs:
-    uat-role:
+    Build:
         runs-on: [ubuntu-latest]
-        environment: 
-          name: uat
         steps:
             - name: checkout code 8
               uses: actions/checkout@v3
@@ -20,10 +19,45 @@ jobs:
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             - name: aws cli execution
               run: aws s3 ls
+    UAT-DEPLOYMENT:
+          runs-on: [ubuntu-latest]
+          environment: 
+              name: uat
+          needs: Build
+          if: github.event_name == 'pull_request'
+          steps:
+
+                    - name: connect aws 
+                      uses: aws-actions/configure-aws-credentials@v2
+                      with :
+                        aws-region: us-east-2
+                        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                    - name: aws cli execution
+                      run: aws s3 ls
+    deploy-staging:
+        runs-on: [ubuntu-latest]
+        needs: Build
+        name: Staging Deployment
+        if: github.event.ref == 'refs/heads/main'
+        environment: 
+          name: Staging
+        steps:
+            - name: checkout code 5
+              uses: actions/checkout@v3
+            - name: connect aws 
+              uses: aws-actions/configure-aws-credentials@v2
+              with :
+                aws-region: us-east-2
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            - name: aws cli execution
+              run: |
+               aws s3 ls
     deploy-prod:
         runs-on: [ubuntu-latest]
-        needs: uat-role
-        name: Prod Deployment
+        needs: deploy-staging
+        name: Staging Deployment
         environment: 
           name: Prod
         steps:
@@ -36,7 +70,9 @@ jobs:
                 aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             - name: aws cli execution
-              run: aws s3 ls
+              run: |
+               aws s3 ls
+
            
 
 
