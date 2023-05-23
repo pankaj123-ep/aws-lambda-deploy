@@ -8,7 +8,7 @@ jobs:
     create-role:
         runs-on: [ubuntu-latest]
         steps:
-            - name: checkout code
+            - name: checkout code 5
               uses: actions/checkout@v3
             - name: connect aws 
               uses: aws-actions/configure-aws-credentials@v2
