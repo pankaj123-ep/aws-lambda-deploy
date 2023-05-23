@@ -1,5 +1,8 @@
 name: lambda-deployment
-on: [push, workflow_dispatch]
+on: 
+   push:
+     branches: uat 
+
 jobs:
     create-role:
         runs-on: [ubuntu-latest]
