@@ -17,8 +17,11 @@ jobs:
                 aws-region: us-east-2
                 aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            - name: aws cli execution
-              run: aws s3 ls
+            - name: Upload-Artificats
+              uses: actions/upload-artifact@v3
+              with:
+                name: lambda-code
+                path: dist-path
     UAT-DEPLOYMENT:
           runs-on: [ubuntu-latest]
           environment: 
