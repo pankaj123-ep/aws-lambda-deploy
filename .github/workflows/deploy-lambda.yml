@@ -1,8 +1,8 @@
 name: lambda-deployment
-on: push
+on: [push, workflow_dispatch]
 jobs:
     create-role:
-        runs-on: [ubuntu-latest,workflow_dispatch]
+        runs-on: [ubuntu-latest]
         steps:
             - name: checkout code
               uses: actions/checkout@v3
